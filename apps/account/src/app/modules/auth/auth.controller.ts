@@ -11,13 +11,17 @@ export class AuthController {
 
   @RMQValidate()
   @RMQRoute(AccountRegister.topic)
-  public async register(@Body() dto: AccountRegister.Request): Promise<AccountRegister.Response> {
+  public async register(
+    @Body() dto: AccountRegister.Request
+  ): Promise<AccountRegister.Response> {
     return this.authService.registration(dto);
   }
 
   @RMQValidate()
   @RMQRoute(AccountLogin.topic)
-  public async login(@Body() { email, password }: AccountLogin.Request): Promise<AccountLogin.Response> {
+  public async login(
+    @Body() { email, password }: AccountLogin.Request
+  ): Promise<AccountLogin.Response> {
     const { id } = await this.authService.validateUser(email, password);
 
     return this.authService.login(id);

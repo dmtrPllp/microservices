@@ -6,15 +6,21 @@ import { UserRole } from '@microservices/interfaces';
 
 import { UserRepository } from '../users/user.repository';
 import { UserEntity } from '../users/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly configService: ConfigService
   ) {}
 
-  public async registration({ email, password, displayName }: AccountRegister.Request): Promise<AccountRegister.Response> {
+  public async registration({
+    email,
+    password,
+    displayName,
+  }: AccountRegister.Request): Promise<AccountRegister.Response> {
     const oldUser = await this.userRepository.findUser(email);
 
     if (oldUser) {

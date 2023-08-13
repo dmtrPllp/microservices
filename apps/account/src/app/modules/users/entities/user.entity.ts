@@ -22,7 +22,7 @@ export class UserEntity implements IUser {
     return this;
   }
 
-  public validatePassword(password: string) {
-    return compare(password, this.password);
+  public async validatePassword(password: string) {
+    return await compare(password, this.password);
   }
 }

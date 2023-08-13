@@ -12,7 +12,7 @@ import { UsersController } from './controllers/user.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: 'env/.api.env', isGlobal: true }),
+    ConfigModule.forRoot({ envFilePath: 'envs/.api.env', isGlobal: true }),
     RMQModule.forRootAsync(getRMQConfig()),
     JwtModule.registerAsync(getJWTConfig()),
     PassportModule,
