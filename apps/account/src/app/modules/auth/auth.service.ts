@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
+import { AccountLogin, AccountRegister } from '@microservices/contracts';
 import { UserRole } from '@microservices/interfaces';
 
-import { RegistrationDto } from './dto/user-registration.dto';
 import { UserRepository } from '../users/user.repository';
 import { UserEntity } from '../users/entities/user.entity';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  public async registration({ email, password, displayName }: RegistrationDto) {
+  public async registration({ email, password, displayName }: AccountRegister.Request): Promise<AccountRegister.Response> {
     const oldUser = await this.userRepository.findUser(email);
 
     if (oldUser) {
@@ -50,7 +50,7 @@ export class AuthService {
     return { id: user._id };
   }
 
-  public async login(id: string) {
+  public async login(id: string): Promise<AccountLogin.Response> {
     return {
       access_token: await this.jwtService.signAsync({ id }),
     };
