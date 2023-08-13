@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { AccountLogin, AccountRegister } from '@microservices/contracts';
 import { UserRole } from '@microservices/interfaces';
 
-import { UserRepository } from '../users/user.repository';
+import { UserRepository } from '../users/repositories/users.repository';
 import { UserEntity } from '../users/entities/user.entity';
 import { ConfigService } from '@nestjs/config';
 
