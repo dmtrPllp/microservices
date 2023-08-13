@@ -12,6 +12,7 @@ export class UserEntity implements IUser {
     this._id = user._id;
     this.displayName = user.displayName;
     this.email = user.email;
+    this.password = user.password;
     this.role = user.role;
   }
 
