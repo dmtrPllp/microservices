@@ -7,6 +7,7 @@ import {
   AccountUserCourses,
 } from '@microservices/contracts';
 import { UserRepository } from './repositories/users.repository';
+import { UserEntity } from './entities/user.entity';
 
 @Controller()
 export class UserQueries {
@@ -19,7 +20,9 @@ export class UserQueries {
   ): Promise<AccountGetUserInfo.Response> {
     const user = await this.userRepository.findUserById(id);
 
-    return { user };
+    const profile = new UserEntity(user).getPublicProfile();
+
+    return { profile };
   }
 
   @RMQValidate()

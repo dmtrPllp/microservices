@@ -19,6 +19,14 @@ export class UserEntity implements IUser {
     this.courses = user.courses;
   }
 
+  public getPublicProfile() {
+    return {
+      displayName: this.displayName,
+      email: this.email,
+      role: this.role,
+    };
+  }
+
   public async setPassword(password: string) {
     const salt = await genSalt(10);
     this.password = await hash(password, salt);
@@ -27,5 +35,10 @@ export class UserEntity implements IUser {
 
   public async validatePassword(password: string) {
     return await compare(password, this.password);
+  }
+
+  public updateUser(displayName: string) {
+    this.displayName = displayName;
+    return this;
   }
 }

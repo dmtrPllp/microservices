@@ -17,12 +17,16 @@ export class UserRepository {
     return newUser.save();
   }
 
+  public async updateUser({ _id, ...rest }: UserEntity) {
+    return this.userModel.updateOne({ _id }, { $set: rest }).exec();
+  }
+
   public async findUser(email: string) {
     return this.userModel.findOne({ email }).exec();
   }
 
   public async findUserById(id: string) {
-    return this.userModel.findById(id).select(['_id', 'email', 'displayName', 'role', 'courses']).exec();
+    return this.userModel.findById(id).exec();
   }
 
   public async deleteUser(email: string) {
