@@ -56,6 +56,13 @@ export class UserEntity implements IUser {
     return this;
   }
 
+  public getCourseState(courseId: string): PurchaseState {
+    return (
+      this.courses.find((x) => x.courseId === courseId)?.purchaseState ??
+      PurchaseState.Started
+    );
+  }
+
   public getPublicProfile() {
     return {
       displayName: this.displayName,
