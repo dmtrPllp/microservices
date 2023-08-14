@@ -1,4 +1,9 @@
-import { IUser, IUserCourses, UserRole } from '@microservices/interfaces';
+import {
+  IUser,
+  IUserCourses,
+  PurchaseState,
+  UserRole,
+} from '@microservices/interfaces';
 
 import { compare, genSalt, hash } from 'bcryptjs';
 
@@ -17,6 +22,30 @@ export class UserEntity implements IUser {
     this.password = user.password;
     this.role = user.role;
     this.courses = user.courses;
+  }
+
+  public setCourseStatus(courseId: string, state: PurchaseState) {
+    const exist = this.courses.find((x) => x._id === courseId);
+
+    if (!exist) {
+      this.courses.push({ courseId, purchaseState: state });
+      return this;
+    }
+
+    if (state === PurchaseState.Canceled) {
+      this.courses = this.courses.filter((x) => x._id !== courseId);
+      return this;
+    }
+
+    this.courses = this.courses.map((x) => {
+      if (x._id === courseId) {
+        x.purchaseState = state;
+        return x;
+      }
+      return x;
+    });
+
+    return this;
   }
 
   public getPublicProfile() {

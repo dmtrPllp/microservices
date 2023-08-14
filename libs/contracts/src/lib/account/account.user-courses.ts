@@ -3,7 +3,7 @@ import { IsString } from 'class-validator';
 import { IUserCourses } from '@microservices/interfaces';
 
 export namespace AccountUserCourses {
-  export const topic = 'account.user_courses.query';
+  export const topic = 'account.user-courses.query';
 
   export class Request {
     @IsString()
